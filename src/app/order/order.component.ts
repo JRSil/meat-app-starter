@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
-import {Router} from '@angular/router'
+import {Router} from '@angular/router';
 
-import {RadioOption} from '../shared/radio/radio-option.model'
+import { RadioOption } from '../shared/radio/radio-option.model';
 import { OrderService } from './order.service';
-import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model';
+import { CartItem } from 'app/restaurant-detail/shopping-cart/cart-item.model';
 import { Order, OrderItem } from './order.model';
 
 @Component({
@@ -14,6 +14,7 @@ import { Order, OrderItem } from './order.model';
 export class OrderComponent implements OnInit {
 
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+
   numberPattern = /^[0-9]*$/
 
   orderForm: FormGroup
@@ -26,7 +27,7 @@ export class OrderComponent implements OnInit {
     {label: 'Cartão Refeição', value: 'REF'}
   ]
 
-  constructor(private orderService: OrderService, 
+  constructor(private orderService: OrderService,
               private router: Router,
               private formBuilder: FormBuilder) { }
 
@@ -42,15 +43,15 @@ export class OrderComponent implements OnInit {
     }, {validator: OrderComponent.equalsTo})
   }
 
-  static equalsTo(group: AbstractControl): {[key: string]: boolean} {
+  static equalsTo(group: AbstractControl): {[key: string]: boolean}{
     const email = group.get('email')
     const emailConfirmation = group.get('emailConfirmation')
     if(!email || !emailConfirmation){
       return undefined
     }
 
-    if(email.value !==  emailConfirmation.value){
-      return {emailsNotMatch:true}
+    if(email.value !== emailConfirmation.value){
+      return {emailsNotMatch: true}
     }
 
     return undefined
@@ -60,7 +61,7 @@ export class OrderComponent implements OnInit {
     return this.orderService.itemsValue()
   }
 
-  cartItems(): CartItem[] {
+  cartItems(): CartItem[]{
     return this.orderService.cartItems()
   }
 
@@ -78,12 +79,11 @@ export class OrderComponent implements OnInit {
 
   checkOrder(order: Order){
     order.orderItems = this.cartItems()
-      .map((item:CartItem)=>new OrderItem(item.quantity, item.menuItem.id))
-    this.orderService.checkOrder(order)
-      .subscribe((orderId: string) => {
-        this.router.navigate(['/order-summary'])
-        this.orderService.clear()
-      })
+        .map((item: CartItem) => new OrderItem(item.quantity, item.menuItem.id))
+    this.orderService.checkOrder(order).subscribe((orderId: string) => {
+      this.router.navigate(['/order-summary'])
+      this.orderService.clear()
+    })
     console.log(order)
   }
 

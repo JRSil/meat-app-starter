@@ -2,7 +2,7 @@ class Order{
     constructor(
         public address: string,
         public number: number,
-        public optionalAddress: string,
+        public optionalAdress: string,
         public paymentOption: string,
         public orderItems: OrderItem[] = []
     ){}

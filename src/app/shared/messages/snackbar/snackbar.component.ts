@@ -6,7 +6,7 @@ import 'rxjs/add/observable/timer'
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/switchMap'
 
-import {NotificationService} from '../notification.service'
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'mt-snackbar',
@@ -32,7 +32,7 @@ export class SnackbarComponent implements OnInit {
   message: string = 'Hello there!'
 
   snackVisibility: string = 'hidden'
-  
+
   constructor(private notificationService: NotificationService) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class SnackbarComponent implements OnInit {
       .do(message => {
         this.message = message
         this.snackVisibility = 'visible'
-    }).switchMap(message => Observable.timer(2000))
+    }).switchMap(message => Observable.timer(3000))
       .subscribe(timer => this.snackVisibility = 'hidden')
   }
 

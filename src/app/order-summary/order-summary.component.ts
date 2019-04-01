@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderSummaryComponent implements OnInit {
 
-  rated:boolean
+  rated: boolean
 
   constructor() { }
 
